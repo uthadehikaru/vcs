@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<link href="css/login.css" rel="stylesheet" />
+<link href="<?php echo base_url('css/login.css') ?>" rel="stylesheet" />
 <div class="d-flex align-items-center py-4 bg-body-tertiary">
 <main class="form-signin w-100 m-auto">
   <?php $this->view('alert'); ?>

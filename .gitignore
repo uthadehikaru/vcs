@@ -6,6 +6,12 @@ application/cache/*
 application/logs/*
 !application/logs/index.html
 
+application/config/development/*
+!application/config/development/index.html
+
+.htaccess
+!.htaccess.example
+
 !application/*/.htaccess
 
 composer.lock

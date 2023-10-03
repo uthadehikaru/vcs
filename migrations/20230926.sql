@@ -1,3 +1,19 @@
+
+--
+-- Table structure for table `vouchers`
+--
+
+DROP TABLE IF EXISTS `vouchers`;
+
+CREATE TABLE `vouchers` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `code` varchar(100) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `partner` varchar(100) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `status` varchar(100) COLLATE utf8mb3_unicode_ci NOT NULL DEFAULT 'tersedia',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `vouchers_un` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
 --
 -- Table structure for table `customers`
 --
@@ -15,18 +31,3 @@ CREATE TABLE `customers` (
   KEY `customers_FK` (`voucher_id`),
   CONSTRAINT `customers_FK` FOREIGN KEY (`voucher_id`) REFERENCES `vouchers` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
-
---
--- Table structure for table `vouchers`
---
-
-DROP TABLE IF EXISTS `vouchers`;
-
-CREATE TABLE `vouchers` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `code` varchar(100) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `partner` varchar(100) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `status` varchar(100) COLLATE utf8mb3_unicode_ci NOT NULL DEFAULT 'tersedia',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `vouchers_un` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
