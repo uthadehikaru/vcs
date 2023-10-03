@@ -14,7 +14,15 @@ class Login extends CI_Controller {
 	public function submit()
 	{
 		$username = $this->input->post('username');
-		$this->session->set_userdata('username',$username);
-		redirect('homepage');
+		$password = $this->input->post('password');
+
+		if($username=='admin' && $password=='secret'){
+			$this->session->set_userdata('username',$username);
+			redirect('homepage');
+		}
+
+		$this->session->set_flashdata('error','Invalid Username or Password');
+		redirect('login');
+
 	}
 }
