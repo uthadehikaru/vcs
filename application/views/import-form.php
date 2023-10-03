@@ -1,12 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<?php if($this->session->flashdata('message')): ?>
-<div class="alert alert-success"><?php echo $this->session->flashdata('message'); ?></div>
-<?php endif; ?>
-<?php if($this->session->flashdata('error')): ?>
-<div class="alert alert-danger"><?php echo $this->session->flashdata('error'); ?></div>
-<?php endif; ?>
+<?php $this->view('alert') ?>
 <div class="card">
 	<div class="card-body">
 	<form method="post" action="<?= site_url('import/submit'); ?>" enctype="multipart/form-data">

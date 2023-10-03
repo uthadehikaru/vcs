@@ -12,13 +12,15 @@ class Voucher extends CI_Controller {
 		render('voucher-list',$data);
 	}
 	
-	public function form($id)
+	public function form($id=0)
 	{
 		if(!$this->session->has_userdata('username'))
 			redirect('login');
 		
-		$data['voucher'] = $this->db->get_where("vouchers", ['id'=>$id])->row();
-		$data['customers'] = $this->db->query('select * from customers where voucher_id is null');
+		$data['voucher'] = null;
+		if($id>0)
+			$data['voucher'] = $this->db->get_where("vouchers", ['id'=>$id])->row();
+		$data['customers'] = $this->db->query('select * from customers');
 		render('voucher-form',$data);
 	}
 	
@@ -30,9 +32,9 @@ class Voucher extends CI_Controller {
 		$id = $this->input->post('id');
 		$customer_id = $this->input->post('customer_id');
 		$status = $this->input->post('status');
-		$voucher = $this->db->get_where("vouchers", ['id'=>$id])->row();
 		$customer = $this->db->get_where("customers", ['id'=>$customer_id])->row();
-		if($voucher){
+		if($id){
+			$voucher = $this->db->get_where("vouchers", ['id'=>$id])->row();
 			if($customer){
 				$this->db->reset_query();
 				$this->db->where('id', $customer_id);
@@ -45,13 +47,36 @@ class Voucher extends CI_Controller {
 			}
 
 			$data = [
+				'code' => $this->input->post('code'),
+				'partner' => $this->input->post('partner'),
 				'status' => $status,
 			];
 			$this->db->where('id', $id);
 			$this->db->update('vouchers', $data);
+			$this->session->set_flashdata('message','Voucher Updated');
+		}else{
+			$data = [
+				'code' => $this->input->post('code'),
+				'partner' => $this->input->post('partner'),
+				'status' => $status,
+			];
+			$this->db->insert('vouchers', $data);
+			$id = $this->db->insert_id();
+			if($customer){
+				$this->db->reset_query();
+				$this->db->where('id', $customer_id);
+				$this->db->update('customers', ['voucher_id'=>$id]);
+			}
+			$this->session->set_flashdata('message','Voucher Created');
 		}
 
-		
+		redirect('voucher');
+	}
+	
+	public function delete($id)
+	{
+		$this->db->delete('vouchers', array('id' => $id));
+		$this->session->set_flashdata('message','Voucher Deleted');
 		redirect('voucher');
 	}
 }
