@@ -37,7 +37,7 @@
  * @filesource
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+#[AllowDynamicProperties]//PHP 8.2 Creation of dynamic property MY_Router::$uri is deprecated
 /**
  * Loader Class
  *
