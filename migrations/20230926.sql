@@ -31,3 +31,11 @@ CREATE TABLE `customers` (
   KEY `customers_FK` (`voucher_id`),
   CONSTRAINT `customers_FK` FOREIGN KEY (`voucher_id`) REFERENCES `vouchers` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `ci_sessions` (
+        `id` varchar(128) NOT NULL,
+        `ip_address` varchar(45) NOT NULL,
+        `timestamp` int(10) unsigned DEFAULT 0 NOT NULL,
+        `data` blob NOT NULL,
+        KEY `ci_sessions_timestamp` (`timestamp`)
+);
