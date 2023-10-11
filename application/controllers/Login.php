@@ -16,9 +16,13 @@ class Login extends CI_Controller {
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
 
-		if($username=='admin' && $password=='secret'){
-			$this->session->set_userdata('username',$username);
-			redirect('homepage');
+		$result = $this->db->get_where('users',['username'=>$username, 'password'=>$password]);
+		$user = $result->row();
+		if($user){
+			logs($user->username.' logged in');
+			$this->session->set_userdata('username',$user->username);
+			$this->session->set_userdata('role',$user->role);
+			return redirect('homepage');
 		}
 
 		$this->session->set_flashdata('error','Invalid Username or Password');

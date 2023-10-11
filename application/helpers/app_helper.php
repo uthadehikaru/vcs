@@ -13,3 +13,14 @@ function isLogin()
     $ci =& get_instance();
     return $ci->session->has_userdata('username');
 }
+
+function logs($message, $data=null)
+{
+    $ci =& get_instance();
+    $log = [
+        'message' => $message,
+    ];
+    if($data)
+        $log['data'] = json_encode($data);
+    $ci->db->insert('logs',$log);
+}

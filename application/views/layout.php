@@ -26,19 +26,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="<?php echo site_url(''); ?>">Home</a>
+							<a class="nav-link <?php echo uri_string()=='' || str_starts_with(uri_string(), 'homepage')?'active':''; ?>" href="<?php echo site_url(''); ?>">Home</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="<?php echo site_url('voucher'); ?>">Voucher</a>
+							<a class="nav-link <?php echo str_starts_with(uri_string(), 'voucher')?'active':''; ?>" href="<?php echo site_url('voucher'); ?>">Voucher</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="<?php echo site_url('customer'); ?>">Customer</a>
+							<a class="nav-link <?php echo str_starts_with(uri_string(), 'customer')?'active':''; ?>" href="<?php echo site_url('customer'); ?>">Customer</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="<?php echo site_url('import'); ?>">Import Data</a>
+							<a class="nav-link <?php echo str_starts_with(uri_string(), 'import')?'active':''; ?>" href="<?php echo site_url('import'); ?>">Import Data</a>
 						</li>
+						<?php if($this->session->userdata('role') === 'admin'): ?>
+						<li class="nav-item">
+							<a class="nav-link <?php echo str_starts_with(uri_string(), 'user')?'active':''; ?>" href="<?php echo site_url('user'); ?>">User</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link <?php echo str_starts_with(uri_string(), 'log')?'active':''; ?>" href="<?php echo site_url('log'); ?>">Log</a>
+						</li>
+						<?php endif; ?>
 					</ul>
                     <span class="navbar-text">
+						<span class="text-primary">Welcome <?php echo $this->session->userdata('username'); ?>!</span>
                         <a href="<?= site_url('logout'); ?>">Logout</a>
                     </span>
 				</div>
@@ -56,7 +65,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 	<script>
 		$( document ).ready(function() {
-			new DataTable('.table');
+			new DataTable('.datatable');
 
 			$("#checkall").click(function(){
 				$('input:checkbox').not(this).prop('checked', this.checked);

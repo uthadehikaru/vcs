@@ -99,6 +99,7 @@ class Import extends CI_Controller {
 					}
 
 					fclose($handle);
+					logs($this->session->userdata('username').' imported '.$count.' '.$table, $customers ?? $vouchers);
 					$this->session->set_flashdata('message','Imported '.$count.' '.$table);
 					redirect('import');
 

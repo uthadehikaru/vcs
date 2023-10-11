@@ -39,3 +39,21 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
         `data` blob NOT NULL,
         KEY `ci_sessions_timestamp` (`timestamp`)
 );
+
+CREATE TABLE `users` (
+  `username` varchar(100) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `role` varchar(100) COLLATE utf8mb3_unicode_ci NOT NULL DEFAULT 'user',
+  PRIMARY KEY (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+CREATE TABLE voucher.logs (
+	id BIGINT UNSIGNED auto_increment NOT NULL,
+	created TIMESTAMP DEFAULT now() NOT NULL,
+	message TEXT NOT NULL,
+	`data` TEXT NULL,
+	CONSTRAINT logs_pk PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb3
+COLLATE=utf8mb3_unicode_ci;

@@ -8,6 +8,7 @@ class Logout extends CI_Controller {
 		if(!$this->session->has_userdata('username'))
 			redirect('login');
 
+		logs($this->session->userdata('username').' logged out');
 		$this->session->sess_destroy();
 		redirect('login');
 	}

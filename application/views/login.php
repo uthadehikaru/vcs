@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <main class="form-signin w-100 m-auto">
   <?php $this->view('alert'); ?>
   <form method="post" action="<?= site_url('login/submit'); ?>">
-    <h1 class="h3 mb-3 fw-normal">Voucher System</h1>
+    <h1 class="h3 mb-3 fw-normal text-center">Welcome!</h1>
 
     <div class="form-floating">
       <input type="text" class="form-control" id="username" name="username" autofocus>

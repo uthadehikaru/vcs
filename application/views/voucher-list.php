@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</div>
 	</div>
 	<div class="card-body">
-	<table id="voucher" class="table table-striped">
+	<table id="voucher" class="table table-striped datatable">
 		<thead>
 		<tr>
 			<td><input type="checkbox" id="checkall" /></td>

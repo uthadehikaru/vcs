@@ -59,6 +59,7 @@ class Voucher extends CI_Controller {
 			];
 			$this->db->where('id', $id);
 			$this->db->update('vouchers', $data);
+			logs($this->session->userdata('username').' updated 1 voucher', $data);
 			$this->session->set_flashdata('message','Voucher Updated');
 		}else{
 			$data = [
@@ -73,6 +74,7 @@ class Voucher extends CI_Controller {
 				$this->db->where('id', $customer_id);
 				$this->db->update('customers', ['voucher_id'=>$id]);
 			}
+			logs($this->session->userdata('username').' inserted 1 voucher', $data);
 			$this->session->set_flashdata('message','Voucher Created');
 		}
 
@@ -80,8 +82,14 @@ class Voucher extends CI_Controller {
 	}
 	
 	public function delete($id)
-	{
+	{	
+		$this->db->where('voucher_id',$id);
+		$this->db->update('customers', ['voucher_id'=>null]);
+
+		$voucher = $this->db->get_where('vouchers',array('id' => $id))->row_array();
+		$this->db->reset_query();
 		$this->db->delete('vouchers', array('id' => $id));
+		logs($this->session->userdata('username').' deleted voucher '.$voucher['code'], $voucher);
 		$this->session->set_flashdata('message','Voucher Deleted');
 		redirect('voucher');
 	}
@@ -95,7 +103,12 @@ class Voucher extends CI_Controller {
 
 		$this->db->reset_query();
 		$this->db->where_in('id',$ids);
+		$vouchers = $this->db->get('vouchers')->result_array();
+
+		$this->db->reset_query();
+		$this->db->where_in('id',$ids);
 		$this->db->delete('vouchers');
+		logs($this->session->userdata('username').' deleted '.$this->db->affected_rows().' vouchers', $vouchers);
 		$this->session->set_flashdata('message', $this->db->affected_rows().' Vouchers Deleted');	
 		redirect('voucher');
 	}

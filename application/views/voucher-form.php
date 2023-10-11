@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<h1 class="h3 mb-3 fw-normal">Voucher <?php echo $voucher?->code; ?></h1>
 		<div class="mb-3">
 			<label for="code" class="form-label">Code</label>
-			<input type="text" name="code" class="form-control" value="<?php echo $voucher?->code; ?>" required />
+			<input type="text" name="code" class="form-control" value="<?php echo $voucher?->code; ?>" <?php echo $voucher?'readonly':''; ?> required />
 		</div>
 		<div class="mb-3">
 			<label for="partner" class="form-label">Partner</label>

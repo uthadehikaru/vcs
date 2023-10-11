@@ -42,9 +42,11 @@ class Customer extends CI_Controller {
 		if($customer){
 			$this->db->where('id', $id);
 			$this->db->update('customers', $data);
+			logs($this->session->userdata('username').' updated 1 customer', $data);
 			$this->session->set_flashdata('message','Customer Updated');
 		}else{
 			$this->db->insert('customers', $data);
+			logs($this->session->userdata('username').' inserted 1 customer', $data);
 			$this->session->set_flashdata('message','Customer Created');
 		}
 
@@ -58,7 +60,10 @@ class Customer extends CI_Controller {
 			$this->db->where('id', $customer->voucher_id);
 			$this->db->update('vouchers', ['status'=>'tersedia']);
 		}
+		$customer = $this->db->get_where('customers',array('id' => $id))->row_array();
+		$this->db->reset_query();
 		$this->db->delete('customers', array('id' => $id));
+		logs($this->session->userdata('username').' deleted customer '.$customer['id'], $customer);
 		$this->session->set_flashdata('message','Customer Deleted');
 		redirect('customer');
 	}
@@ -67,7 +72,12 @@ class Customer extends CI_Controller {
 	{
 		$ids = $this->input->post('ids');
 		$this->db->where_in('id',$ids);
+		$customers = $this->db->get('customers')->result_array();
+
+		$this->db->reset_query();
+		$this->db->where_in('id',$ids);
 		$this->db->delete('customers');
+		logs($this->session->userdata('username').' deleted '.$this->db->affected_rows().' customers', $customers);
 		$this->session->set_flashdata('message', $this->db->affected_rows().' Customers Deleted');	
 		redirect('customer');
 	}
