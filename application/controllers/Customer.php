@@ -62,4 +62,36 @@ class Customer extends CI_Controller {
 		$this->session->set_flashdata('message','Customer Deleted');
 		redirect('customer');
 	}
+	
+	public function bulk()
+	{
+		$ids = $this->input->post('ids');
+		$this->db->where_in('id',$ids);
+		$this->db->delete('customers');
+		$this->session->set_flashdata('message', $this->db->affected_rows().' Customers Deleted');	
+		redirect('customer');
+	}
+	
+	public function export()
+	{	
+		$header = array('id','name','phone','email','package','voucher','status'); 
+		$this->db->select('customers.id, customers.name, customers.phone, customers.email, customers.package, vouchers.code, vouchers.status');
+		$this->db->from('customers');
+		$this->db->join('vouchers', 'customers.voucher_id = vouchers.id');
+
+		$customers = $this->db->get();
+		header("Content-Description: File Transfer"); 
+		header("Content-Disposition: attachment; filename=customers.csv"); 
+		header("Content-Type: application/csv;");
+	
+		// file creation 
+		$file = fopen('php://output', 'w');
+	
+		fputcsv($file, $header);
+		foreach ($customers->result_array() as $key => $value)
+			fputcsv($file, $value); 
+
+		fclose($file); 
+		
+	}
 }

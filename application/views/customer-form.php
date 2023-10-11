@@ -26,7 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<input type="email" name="email" class="form-control" value="<?php echo $customer?->email; ?>" required />
 		</div>
 		<div class="mb-3">
-			<label for="package" class="form-label">Paket</label>
+			<label for="package" class="form-label">Package</label>
 			<input type="text" name="package" class="form-control" value="<?php echo $customer?->package; ?>" required />
 		</div>
 		<button type="submit" class="btn btn-primary">Submit</button>

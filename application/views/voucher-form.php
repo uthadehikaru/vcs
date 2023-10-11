@@ -26,10 +26,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<div class="mb-3">
 			<label for="status" class="form-label">Status</label>
 			<select name="status" required class="form-control">
-				<option value="">-- pilih status --</option>
-				<option value="tersedia" <?php echo $voucher?->status=='tersedia'?'selected':''; ?>>Tersedia</option>
-				<option value="terkirim" <?php echo $voucher?->status=='terkirim'?'selected':''; ?>>Terkirim</option>
-				<option value="aktif" <?php echo $voucher?->status=='aktif'?'selected':''; ?>>Aktif</option>
+				<option value="">-- select status --</option>
+				<option value="available" <?php echo $voucher?->status=='available'?'selected':''; ?>>Available</option>
+				<option value="sent" <?php echo $voucher?->status=='sent'?'selected':''; ?>>Sent</option>
+				<option value="active" <?php echo $voucher?->status=='active'?'selected':''; ?>>Active</option>
 				<option value="suspend" <?php echo $voucher?->status=='suspend'?'selected':''; ?>>Suspend</option>
 				<option value="redeem" <?php echo $voucher?->status=='redeem'?'selected':''; ?>>Redeem</option>
 			</select>

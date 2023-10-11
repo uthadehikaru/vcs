@@ -57,6 +57,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<script>
 		$( document ).ready(function() {
 			new DataTable('.table');
+
+			$("#checkall").click(function(){
+				$('input:checkbox').not(this).prop('checked', this.checked);
+				$('#submit').prop('disabled', !this.checked);
+			});
+
+			$(".selected").click(function(){
+				checked = false;
+				$('.selected').each(function(i){
+					if(this.checked)
+						checked = true;
+				})
+				$('#submit').prop('disabled', !checked);
+			});
 		});
 	</script>
 </body>

@@ -2,29 +2,35 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <?php $this->view('alert') ?>
-<div class="card">
+<form class="card" method="post" action="<?php echo site_url('customer/bulk'); ?>" onsubmit="return confirm('Are you sure?')">
 	<div class="card-header">
 		<div class="row">
 			<span class="col">Data Customer</span>
-			<a href="<?php echo site_url('customer/form'); ?>" class="btn btn-primary btn-sm col-1">Add New</a>
+			<div class="col-3 d-flex justify-content-evenly">
+			<a href="<?php echo site_url('customer/form'); ?>" class="btn btn-primary btn-sm mr-2">Add New</a>
+			<a href="<?php echo site_url('customer/export'); ?>" class="btn btn-success btn-sm mr-2">Export</a>
+			<button type="submit" id="submit" disabled class="btn btn-danger btn-sm ml-2">Delete Selected</button>
+			</div>
 		</div>
 	</div>
 	<div class="card-body">
 	<table class="table table-striped">
 		<thead>
 		<tr>
+			<td><input type="checkbox" id="checkall" /></td>
 			<td>ID</td>
-			<td>Nama</td>
+			<td>Name</td>
 			<td>Phone</td>
 			<td>Email</td>
-			<td>Paket</td>
+			<td>Package</td>
 			<td>Voucher</td>
-			<td>Aksi</td>
+			<td>Action</td>
 		</tr>
 		</thead>
 		<tbody>
 		<?php foreach ($customers->result() as $row): ?>
 			<tr>
+				<td><input type="checkbox" class="selected" name="ids[]" value="<?php echo $row->id; ?>" /></td>
 				<td><?php echo $row->id; ?></td>
 				<td><?php echo $row->name; ?></td>
 				<td><?php echo $row->phone; ?></td>
@@ -40,4 +46,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</tbody>
 	</table>
 	</div>
-</div>
+</form>

@@ -8,7 +8,13 @@ class Voucher extends CI_Controller {
 		if(!$this->session->has_userdata('username'))
 			redirect('login');
 		
-		$data['vouchers'] = $this->db->query("SELECT v.*, c.name as customer FROM vouchers v left join customers c on v.id=c.voucher_id");
+		$status = $this->input->get('status');
+		$sql = "SELECT v.*, c.id as customer FROM vouchers v left join customers c on v.id=c.voucher_id";
+		if($status)
+			$sql .= " where v.status=?";
+		
+		$data['status'] = $status;
+		$data['vouchers'] = $this->db->query($sql, [$status]);
 		render('voucher-list',$data);
 	}
 	
@@ -78,5 +84,42 @@ class Voucher extends CI_Controller {
 		$this->db->delete('vouchers', array('id' => $id));
 		$this->session->set_flashdata('message','Voucher Deleted');
 		redirect('voucher');
+	}
+	
+	public function bulk()
+	{
+		$ids = $this->input->post('ids');
+		
+		$this->db->where_in('voucher_id',$ids);
+		$this->db->update('customers', ['voucher_id'=>null]);
+
+		$this->db->reset_query();
+		$this->db->where_in('id',$ids);
+		$this->db->delete('vouchers');
+		$this->session->set_flashdata('message', $this->db->affected_rows().' Vouchers Deleted');	
+		redirect('voucher');
+	}
+	
+	public function export($status='')
+	{	
+		$header = ['code','partner','status'];
+		$this->db->select($header);
+		$this->db->from('vouchers');
+		if($status)
+			$this->db->where('status',$status);
+
+		$vouchers = $this->db->get();
+		header("Content-Description: File Transfer"); 
+		header("Content-Disposition: attachment; filename=vouchers.csv"); 
+		header("Content-Type: application/csv;");
+	
+		// file creation 
+		$file = fopen('php://output', 'w');
+	
+		fputcsv($file, $header);
+		foreach ($vouchers->result_array() as $key => $value)
+			fputcsv($file, $value); 
+
+		fclose($file); 
 	}
 }

@@ -1,2 +1,4 @@
-id,name,phone,email,package
-test2,test,test,test,test
+id,name,phone,email,package,voucher,status
+MTX002,Customer 2,812123441234,customer@mail.com,100,VCR001,active
+MTX003,Customer 3,812123441234,customer@mail.com,100,VCR002,sent
+MTX004,Customer 4,812123441234,customer@mail.com,100,,
