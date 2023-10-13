@@ -47,7 +47,15 @@ CREATE TABLE `users` (
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
-CREATE TABLE voucher.logs (
+INSERT INTO users
+(username, password, `role`)
+VALUES('admin', 'secret', 'admin');
+INSERT INTO users
+(username, password, `role`)
+VALUES('user', 'secret', 'user');
+
+
+CREATE TABLE logs (
 	id BIGINT UNSIGNED auto_increment NOT NULL,
 	created TIMESTAMP DEFAULT now() NOT NULL,
 	message TEXT NOT NULL,
