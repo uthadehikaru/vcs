@@ -1,3 +1,13 @@
-code,partner
-VCR001,Voucher 1
-VCR002,Voucher 2
+code,product partner
+VCR001,HB CP+ LITE TESTING
+VCR002,HB CP+ LITE
+VCR003,SB CP+ MOVIE LOVER TESTING
+VCR004,SB CP+ MOVIE LOVER
+VCR005,SB CP+ TVOD (Single Rental) and TVOD MULTI-PACK (testing)
+VCR006,CP+ TVOD (Single Rental) and TVOD MULTI-PACK
+VCR007,CP+ Premium VOD (PVOD) (testing)
+VCR008,CP+ Premium VOD (PVOD)
+VCR009,SB - HIFI’s Entertainment package (Bundling Package) – 30 days voucher TESTING
+VCR010,SB - HIFI’s Entertainment package (Bundling Package) – 30 days voucher
+VCR011,SB - Service as a standalone product - 30 days voucher TESTING
+VCR012,SB - Service as a standalone product - 30 days voucher

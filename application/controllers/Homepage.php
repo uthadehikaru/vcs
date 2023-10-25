@@ -9,11 +9,10 @@ class Homepage extends CI_Controller {
 			redirect('login');
 			
 		$data['total'] = $this->db->count_all('vouchers');
-		$data['tersedia'] = $this->db->query("select 1 from vouchers where status='available'")->num_rows();
-		$data['aktif'] = $this->db->query("select 1 from vouchers where status='active'")->num_rows();
-		$data['terkirim'] = $this->db->query("select 1 from vouchers where status='sent'")->num_rows();
-		$data['suspend'] = $this->db->query("select 1 from vouchers where status='suspend'")->num_rows();
-		$data['redeem'] = $this->db->query("select 1 from vouchers where status='redeem'")->num_rows();
+		$statuses = ['available','sent','active','suspend','redeem','terminate','inactive'];
+		$data['statuses'] = $statuses;
+		foreach($statuses as $status)
+			$data[$status] = $this->db->query("select 1 from vouchers where status='$status'")->num_rows();
 		render('homepage',$data);
 	}
 }

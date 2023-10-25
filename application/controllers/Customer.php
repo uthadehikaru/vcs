@@ -8,7 +8,7 @@ class Customer extends CI_Controller {
 		if(!$this->session->has_userdata('username'))
 			redirect('login');
 		
-		$data['customers'] = $this->db->query("SELECT c.*, v.code as voucher FROM customers c left join vouchers v on c.voucher_id=v.id");
+		$data['customers'] = $this->db->query("SELECT c.*, v.code as voucher, p.name as partner, p.product, v.status FROM customers c left join vouchers v on c.voucher_id=v.id left join partners p on v.partner_id=p.id");
 		render('customer-list',$data);
 	}
 	
@@ -84,10 +84,11 @@ class Customer extends CI_Controller {
 	
 	public function export()
 	{	
-		$header = array('id','name','phone','email','package','voucher','status'); 
-		$this->db->select('customers.id, customers.name, customers.phone, customers.email, customers.package, vouchers.code, vouchers.status');
+		$header = array('id','name','phone','email','package','voucher', 'partner', 'product','status'); 
+		$this->db->select('customers.id, customers.name, customers.phone, customers.email, customers.package, vouchers.code, partners.name as partner, partners.product, vouchers.status');
 		$this->db->from('customers');
-		$this->db->join('vouchers', 'customers.voucher_id = vouchers.id');
+		$this->db->join('vouchers', 'customers.voucher_id = vouchers.id', 'left');
+		$this->db->join('partners', 'vouchers.partner_id = partners.id', 'left');
 
 		$customers = $this->db->get();
 		header("Content-Description: File Transfer"); 

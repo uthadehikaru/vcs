@@ -9,7 +9,7 @@ class Voucher extends CI_Controller {
 			redirect('login');
 		
 		$status = $this->input->get('status');
-		$sql = "SELECT v.*, c.id as customer FROM vouchers v left join customers c on v.id=c.voucher_id";
+		$sql = "SELECT v.*, c.id as customer, p.name as partner, p.product FROM vouchers v join partners p on v.partner_id=p.id left join customers c on v.id=c.voucher_id";
 		if($status)
 			$sql .= " where v.status=?";
 		
@@ -27,6 +27,7 @@ class Voucher extends CI_Controller {
 		if($id>0)
 			$data['voucher'] = $this->db->get_where("vouchers", ['id'=>$id])->row();
 		$data['customers'] = $this->db->query('select * from customers');
+		$data['partners'] = $this->db->query('select * from partners');
 		render('voucher-form',$data);
 	}
 	
@@ -115,9 +116,10 @@ class Voucher extends CI_Controller {
 	
 	public function export($status='')
 	{	
-		$header = ['code','partner','status'];
-		$this->db->select($header);
+		$header = ['code','partner', 'product' ,'status'];
+		$this->db->select(['code','partners.name', 'product' ,'status']);
 		$this->db->from('vouchers');
+		$this->db->join('partners', 'vouchers.partner_id = partners.id');
 		if($status)
 			$this->db->where('status',$status);
 

@@ -35,6 +35,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<a class="nav-link <?php echo str_starts_with(uri_string(), 'customer')?'active':''; ?>" href="<?php echo site_url('customer'); ?>">Customer</a>
 						</li>
 						<li class="nav-item">
+							<a class="nav-link <?php echo str_starts_with(uri_string(), 'partner')?'active':''; ?>" href="<?php echo site_url('partner'); ?>">Partner</a>
+						</li>
+						<li class="nav-item">
 							<a class="nav-link <?php echo str_starts_with(uri_string(), 'import')?'active':''; ?>" href="<?php echo site_url('import'); ?>">Import Data</a>
 						</li>
 						<?php if($this->session->userdata('role') === 'admin'): ?>
@@ -65,7 +68,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 	<script>
 		$( document ).ready(function() {
-			new DataTable('.datatable');
+			new DataTable('.datatable', {
+				columnDefs: [
+					{ orderable: false, targets: 0 }
+				],
+				order: [[1, 'desc']]
+			});
 
 			$("#checkall").click(function(){
 				$('input:checkbox').not(this).prop('checked', this.checked);

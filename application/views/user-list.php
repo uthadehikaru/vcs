@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<tr>
 			<td>Username</td>
 			<td>Role</td>
-			<td>Action</td>
+			<td width="12%">Action</td>
 		</tr>
 		</thead>
 		<tbody>

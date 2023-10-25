@@ -11,8 +11,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<input type="text" name="code" class="form-control" value="<?php echo $voucher?->code; ?>" <?php echo $voucher?'readonly':''; ?> required />
 		</div>
 		<div class="mb-3">
-			<label for="partner" class="form-label">Partner</label>
-			<input type="text" name="partner" class="form-control" value="<?php echo $voucher?->partner; ?>" required />
+			<label for="customer" class="form-label">Partner</label>
+			<select name="customer_id" class="form-control">
+				<option value="">-- no partner --</option>
+				<?php foreach($partners->result() as $partner):?>
+					<option value="<?php echo $partner->id; ?>" <?php echo $voucher && $partner?->id==$voucher->partner_id?'selected':''; ?>><?php echo $partner->name; ?> - <?php echo $partner->product; ?></option>
+				<?php endforeach; ?>
+			</select>
 		</div>
 		<div class="mb-3">
 			<label for="customer" class="form-label">Customer</label>
@@ -32,6 +37,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<option value="active" <?php echo $voucher?->status=='active'?'selected':''; ?>>Active</option>
 				<option value="suspend" <?php echo $voucher?->status=='suspend'?'selected':''; ?>>Suspend</option>
 				<option value="redeem" <?php echo $voucher?->status=='redeem'?'selected':''; ?>>Redeem</option>
+				<option value="terminate" <?php echo $voucher?->status=='terminate'?'selected':''; ?>>Terminate</option>
+				<option value="inactive" <?php echo $voucher?->status=='inactive'?'selected':''; ?>>Inactive</option>
 			</select>
 		</div>
 		<button type="submit" class="btn btn-primary">Submit</button>

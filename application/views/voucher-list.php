@@ -18,11 +18,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<thead>
 		<tr>
 			<td><input type="checkbox" id="checkall" /></td>
-			<td>Code</td>
-			<td>Partner</td>
-			<td>Status</td>
-			<td>Customer</td>
-			<td>Action</td>
+			<td>CODE</td>
+			<td>PARTNER</td>
+			<td>PRODUCT PARTNER</td>
+			<td>STATUS</td>
+			<td>ID CUSTOMER</td>
+			<td width="12%">Action</td>
 		</tr>
 		</thead>
 		<tbody>
@@ -30,7 +31,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<tr>
 				<td><input type="checkbox" class="selected" name="ids[]" value="<?php echo $row->id; ?>" /></td>
 				<td><?php echo $row->code; ?></td>
-				<td><?php echo $row->partner; ?></td>
+				<td><?php echo $row->partner_id?$row->partner:'-'; ?></td>
+				<td><?php echo $row->partner_id?$row->product:'-'; ?></td>
 				<td><?php echo $row->status; ?></td>
 				<td><?php echo $row->customer??'-'; ?></td>
 				<td>

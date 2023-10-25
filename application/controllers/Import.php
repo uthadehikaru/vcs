@@ -17,7 +17,7 @@ class Import extends CI_Controller {
 		if(!$this->session->has_userdata('username'))
 			redirect('login');
 
-		$statuses = ['available','sent','active','suspend','redeem'];
+		$statuses = ['available','sent','active','suspend','redeem','terminate','inactive'];
 		try{
 			$file = $_FILES['file']['tmp_name'];
 			$table = $this->input->post('table');
@@ -36,15 +36,22 @@ class Import extends CI_Controller {
 					$i = 0;
 					$handle = fopen($file, "r");
 					$vouchers = [];
+					$partners = [];
 					while (($row = fgetcsv($handle, 2048))) {
 						$i++;
 						if ($i == 1) continue;
 
 						if($table=='vouchers'){
+							$partner = $this->db->get_where('partners',['product'=>$row[1]])->row();
+							if(!$partner){
+								$this->session->set_flashdata('error','No Product Partner Found '.$row[2]);
+								redirect('import');
+								exit;
+							}
 
 							$vouchers[] = [
 								'code' => $row[0],
-								'partner' => $row[1],
+								'partner_id' => $partner->id,
 								'status' => 'available',
 							];
 						}
@@ -60,7 +67,7 @@ class Import extends CI_Controller {
 								}
 
 								if(!in_array($row[6], $statuses)){
-									$this->session->set_flashdata('error','Invalid Status \''.$row[5].'\' on Row '.$i.'. select one of these [available,sent,active,suspend or redeem]');
+									$this->session->set_flashdata('error','Invalid Status \''.$row[6].'\' for \''.$row[5].'\' on Row '.$i.'. select one of these [available,sent,active,suspend or redeem]');
 									redirect('import');
 									exit;
 								}
@@ -81,6 +88,14 @@ class Import extends CI_Controller {
 							$customers[] = $customer;
 						}
 
+						if($table=='partners'){
+
+							$partners[] = [
+								'name' => $row[0],
+								'product' => $row[1],
+							];
+						}
+
 						// Simpan data ke database.
 					}
 					$count = 0;
@@ -96,10 +111,13 @@ class Import extends CI_Controller {
 					} else if($vouchers){
 						$this->db->insert_batch('vouchers',$vouchers);
 						$count = count($vouchers);
+					} else if($partners){
+						$this->db->insert_batch('partners',$partners);
+						$count = count($partners);
 					}
 
 					fclose($handle);
-					logs($this->session->userdata('username').' imported '.$count.' '.$table, $customers ?? $vouchers);
+					logs($this->session->userdata('username').' imported '.$count.' '.$table, $customers ?? $vouchers ?? $partners);
 					$this->session->set_flashdata('message','Imported '.$count.' '.$table);
 					redirect('import');
 
