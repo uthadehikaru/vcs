@@ -22,27 +22,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<td>NAME</td>
 			<td>PHONE</td>
 			<td>EMAIL</td>
-			<td>HIFI INTERNET PACKAGE</td>
-			<td>VOUCHER</td>
-			<td>PARTNER</td>
-			<td>PRODUCT PARTNER</td>
-			<td>STATUS</td>
 			<td width="12%">Action</td>
 		</tr>
 		</thead>
 		<tbody>
-		<?php foreach ($customers->result() as $row): ?>
+		<?php foreach ($customers as $row): ?>
 			<tr>
 				<td><input type="checkbox" class="selected" name="ids[]" value="<?php echo $row->id; ?>" /></td>
 				<td><?php echo $row->id; ?></td>
 				<td><?php echo $row->name; ?></td>
 				<td><?php echo $row->phone; ?></td>
 				<td><?php echo $row->email; ?></td>
-				<td><?php echo $row->package; ?></td>
-				<td><?php echo $row->voucher_id?$row->voucher:'-'; ?></td>
-				<td><?php echo $row->partner?$row->partner:'-'; ?></td>
-				<td><?php echo $row->partner?$row->product:'-'; ?></td>
-				<td><?php echo $row->voucher_id?$row->status:'-'; ?></td>
 				<td>
 					<a href="<?php echo site_url('customer/form/'.$row->id); ?>" class="btn btn-warning btn-sm">Edit</a>
 					<a href="<?php echo site_url('customer/delete/'.$row->id); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>

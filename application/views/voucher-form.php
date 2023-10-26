@@ -11,20 +11,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<input type="text" name="code" class="form-control" value="<?php echo $voucher?->code; ?>" <?php echo $voucher?'readonly':''; ?> required />
 		</div>
 		<div class="mb-3">
-			<label for="customer" class="form-label">Partner</label>
-			<select name="customer_id" class="form-control">
+			<label for="partner" class="form-label">Partner</label>
+			<select name="partner_id" class="form-control">
 				<option value="">-- no partner --</option>
-				<?php foreach($partners->result() as $partner):?>
+				<?php foreach($partners as $partner):?>
 					<option value="<?php echo $partner->id; ?>" <?php echo $voucher && $partner?->id==$voucher->partner_id?'selected':''; ?>><?php echo $partner->name; ?> - <?php echo $partner->product; ?></option>
 				<?php endforeach; ?>
 			</select>
 		</div>
 		<div class="mb-3">
-			<label for="customer" class="form-label">Customer</label>
-			<select name="customer_id" class="form-control">
-				<option value="">-- no customer --</option>
-				<?php foreach($customers->result() as $customer):?>
-					<option value="<?php echo $customer->id; ?>" <?php echo $voucher && $voucher?->id==$customer->voucher_id?'selected':''; ?>><?php echo $customer->id; ?> - <?php echo $customer->name; ?></option>
+			<label for="billing" class="form-label">Billing Account</label>
+			<select name="billing_id" class="form-control">
+				<option value="">-- no billing account --</option>
+				<?php foreach($billings as $billing):?>
+					<option value="<?php echo $billing->id; ?>" <?php echo $voucher && $voucher->billing_id==$billing->id?'selected':''; ?>><?php echo $billing->customer_id; ?> - <?php echo $billing->id; ?></option>
 				<?php endforeach; ?>
 			</select>
 		</div>

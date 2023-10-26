@@ -22,19 +22,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<td>PARTNER</td>
 			<td>PRODUCT PARTNER</td>
 			<td>STATUS</td>
-			<td>ID CUSTOMER</td>
+			<td>BILLING ACCOUNT</td>
 			<td width="12%">Action</td>
 		</tr>
 		</thead>
 		<tbody>
-		<?php foreach ($vouchers->result() as $row): ?>
+		<?php foreach ($vouchers as $row): ?>
 			<tr>
 				<td><input type="checkbox" class="selected" name="ids[]" value="<?php echo $row->id; ?>" /></td>
 				<td><?php echo $row->code; ?></td>
 				<td><?php echo $row->partner_id?$row->partner:'-'; ?></td>
 				<td><?php echo $row->partner_id?$row->product:'-'; ?></td>
 				<td><?php echo $row->status; ?></td>
-				<td><?php echo $row->customer??'-'; ?></td>
+				<td><?php echo $row->billing_id??'-'; ?></td>
 				<td>
 					<a href="<?php echo site_url('voucher/form/'.$row->id); ?>" class="btn btn-warning btn-sm">Edit</a>
 					<a href="<?php echo site_url('voucher/delete/'.$row->id); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>

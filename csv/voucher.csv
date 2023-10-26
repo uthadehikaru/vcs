@@ -1,13 +1,13 @@
-code,product partner
-VCR001,HB CP+ LITE TESTING
-VCR002,HB CP+ LITE
-VCR003,SB CP+ MOVIE LOVER TESTING
-VCR004,SB CP+ MOVIE LOVER
-VCR005,SB CP+ TVOD (Single Rental) and TVOD MULTI-PACK (testing)
-VCR006,CP+ TVOD (Single Rental) and TVOD MULTI-PACK
-VCR007,CP+ Premium VOD (PVOD) (testing)
-VCR008,CP+ Premium VOD (PVOD)
-VCR009,SB - HIFI’s Entertainment package (Bundling Package) – 30 days voucher TESTING
-VCR010,SB - HIFI’s Entertainment package (Bundling Package) – 30 days voucher
-VCR011,SB - Service as a standalone product - 30 days voucher TESTING
-VCR012,SB - Service as a standalone product - 30 days voucher
+code,partner,product partner,status,billing account
+VCR001,CP+,HB CP+ LITE TESTING,available,
+VCR002,CP+,HB CP+ LITE,active,1001002
+VCR003,CP+,SB CP+ MOVIE LOVER TESTING,terminate,1001003
+VCR004,CP+,SB CP+ MOVIE LOVER,redeem,1001004
+VCR005,CP+,SB CP+ TVOD (Single Rental) and TVOD MULTI-PACK (testing),inactive,1001005
+VCR006,CP+,CP+ TVOD (Single Rental) and TVOD MULTI-PACK,suspend,1001006
+VCR007,CP+,CP+ Premium VOD (PVOD) (testing),available,
+VCR008,CP+,CP+ Premium VOD (PVOD),active,1002002
+VCR009,VIU,SB - HIFI’s Entertainment package (Bundling Package) – 30 days voucher TESTING,redeem,1002003
+VCR010,VIU,SB - HIFI’s Entertainment package (Bundling Package) – 30 days voucher,suspend,1002004
+VCR011,VIU,SB - Service as a standalone product - 30 days voucher TESTING,inactive,1002005
+VCR012,VIU,SB - Service as a standalone product - 30 days voucher,terminate,1002006

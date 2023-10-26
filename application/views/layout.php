@@ -29,13 +29,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<a class="nav-link <?php echo uri_string()=='' || str_starts_with(uri_string(), 'homepage')?'active':''; ?>" href="<?php echo site_url(''); ?>">Home</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link <?php echo str_starts_with(uri_string(), 'voucher')?'active':''; ?>" href="<?php echo site_url('voucher'); ?>">Voucher</a>
-						</li>
-						<li class="nav-item">
 							<a class="nav-link <?php echo str_starts_with(uri_string(), 'customer')?'active':''; ?>" href="<?php echo site_url('customer'); ?>">Customer</a>
 						</li>
 						<li class="nav-item">
+							<a class="nav-link <?php echo str_starts_with(uri_string(), 'billing')?'active':''; ?>" href="<?php echo site_url('billing'); ?>">Billing</a>
+						</li>
+						<li class="nav-item">
 							<a class="nav-link <?php echo str_starts_with(uri_string(), 'partner')?'active':''; ?>" href="<?php echo site_url('partner'); ?>">Partner</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link <?php echo str_starts_with(uri_string(), 'voucher')?'active':''; ?>" href="<?php echo site_url('voucher'); ?>">Voucher</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link <?php echo str_starts_with(uri_string(), 'import')?'active':''; ?>" href="<?php echo site_url('import'); ?>">Import Data</a>
@@ -74,6 +77,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				],
 				order: [[1, 'desc']]
 			});
+
+			if ($("#logs").length) {
+				new DataTable('#logs', {
+					order: [[0, 'desc']]
+				});
+			}
 
 			$("#checkall").click(function(){
 				$('input:checkbox').not(this).prop('checked', this.checked);

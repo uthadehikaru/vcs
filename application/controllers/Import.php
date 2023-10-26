@@ -35,16 +35,26 @@ class Import extends CI_Controller {
 
 					$i = 0;
 					$handle = fopen($file, "r");
+					$customers = [];
 					$vouchers = [];
 					$partners = [];
+					$billings = [];
 					while (($row = fgetcsv($handle, 2048))) {
 						$i++;
 						if ($i == 1) continue;
 
 						if($table=='vouchers'){
-							$partner = $this->db->get_where('partners',['product'=>$row[1]])->row();
+							$partner = $this->db->get_where('partners',['product'=>$row[2]])->row();
 							if(!$partner){
 								$this->session->set_flashdata('error','No Product Partner Found '.$row[2]);
+								redirect('import');
+								exit;
+							}
+							
+							$this->load->model('Billing_model');
+							$billing = $this->Billing_model->get($row[4]);
+							if($row[4] && !$billing){
+								$this->session->set_flashdata('error','No Billing Account Found '.$row[4]);
 								redirect('import');
 								exit;
 							}
@@ -52,40 +62,28 @@ class Import extends CI_Controller {
 							$vouchers[] = [
 								'code' => $row[0],
 								'partner_id' => $partner->id,
-								'status' => 'available',
+								'status' => $row[3],
+								'billing_id' => $row[4]
 							];
 						}
 
 						if($table=='customers'){
-							$voucher = null;
-							if($row[5]){
-								$voucher = $this->db->get_where('vouchers',['code'=>$row[5]])->row();
-								if(!$voucher){
-									$this->session->set_flashdata('error','No Voucher Code '.$row[5]);
-									redirect('import');
-									exit;
-								}
-
-								if(!in_array($row[6], $statuses)){
-									$this->session->set_flashdata('error','Invalid Status \''.$row[6].'\' for \''.$row[5].'\' on Row '.$i.'. select one of these [available,sent,active,suspend or redeem]');
-									redirect('import');
-									exit;
-								}
-
-								$vouchers[$voucher->id] = $row[6];
-							}
 							$customer = [
 								'id' => $row[0],
 								'name' => $row[1],
 								'phone' => $row[2],
-								'email' => $row[3],
-								'package' => $row[4],
-								'voucher_id' => null,
+								'email' => $row[3]
 							];
-							if($voucher)
-								$customer['voucher_id'] = $voucher->id;
 
 							$customers[] = $customer;
+						}
+
+						if($table=='billings'){
+							$billings[] = [
+								'customer_id' => $row[0],
+								'id' => $row[1],
+								'package' => $row[2]
+							];
 						}
 
 						if($table=='partners'){
@@ -114,10 +112,13 @@ class Import extends CI_Controller {
 					} else if($partners){
 						$this->db->insert_batch('partners',$partners);
 						$count = count($partners);
+					} else if($billings){
+						$this->db->insert_batch('billings',$billings);
+						$count = count($billings);
 					}
 
 					fclose($handle);
-					logs($this->session->userdata('username').' imported '.$count.' '.$table, $customers ?? $vouchers ?? $partners);
+					logs($this->session->userdata('username').' imported '.$count.' '.$table, $customers ?? $vouchers ?? $partners ?? $billings);
 					$this->session->set_flashdata('message','Imported '.$count.' '.$table);
 					redirect('import');
 

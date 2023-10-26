@@ -24,3 +24,19 @@ function logs($message, $data=null)
         $log['data'] = json_encode($data);
     $ci->db->insert('logs',$log);
 }
+
+function export($title, $header, $data)
+{
+    header("Content-Description: File Transfer"); 
+    header("Content-Disposition: attachment; filename=$title.csv"); 
+    header("Content-Type: application/csv;");
+
+    // file creation 
+    $file = fopen('php://output', 'w');
+
+    fputcsv($file, $header);
+    foreach ($data as $key => $value)
+        fputcsv($file, $value); 
+
+    fclose($file); 
+}

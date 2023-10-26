@@ -1,14 +1,14 @@
-id,name,phone,email,package,voucher,status
-MTX001,Customer 1,812123441234,customer1@mail.com,100 mb,VCR001,active
-MTX002,Customer 2,812123441235,customer1@mail.com,101 mb,VCR002,sent
-MTX003,Customer 3,812123441236,customer1@mail.com,102 mb,VCR003,redeem
-MTX004,Customer 4,812123441237,customer1@mail.com,103 mb,VCR004,suspend
-MTX005,Customer 5,812123441238,customer1@mail.com,104 mb,VCR005,terminate
-MTX006,Customer 6,812123441239,customer1@mail.com,105 mb,VCR006,inactive
-MTX007,Customer 7,812123441240,customer1@mail.com,106 mb,VCR007,active
-MTX008,Customer 8,812123441241,customer1@mail.com,107 mb,VCR008,sent
-MTX009,Customer 9,812123441242,customer1@mail.com,108 mb,VCR009,redeem
-MTX010,Customer 10,812123441243,customer1@mail.com,109 mb,VCR010,suspend
-MTX011,Customer 11,812123441244,customer1@mail.com,110 mb,VCR011,terminate
-MTX012,Customer 12,812123441245,customer1@mail.com,111 mb,VCR012,inactive
-MTX013,Customer 13,812123441246,customer1@mail.com,112 mb,,
+id,name,phone,email
+MTX001,Customer 1,812123441234,customer1@mail.com
+MTX002,Customer 2,812123441235,customer1@mail.com
+MTX003,Customer 3,812123441236,customer1@mail.com
+MTX004,Customer 4,812123441237,customer1@mail.com
+MTX005,Customer 5,812123441238,customer1@mail.com
+MTX006,Customer 6,812123441239,customer1@mail.com
+MTX007,Customer 7,812123441240,customer1@mail.com
+MTX008,Customer 8,812123441241,customer1@mail.com
+MTX009,Customer 9,812123441242,customer1@mail.com
+MTX010,Customer 10,812123441243,customer1@mail.com
+MTX011,Customer 11,812123441244,customer1@mail.com
+MTX012,Customer 12,812123441245,customer1@mail.com
+MTX013,Customer 13,812123441246,customer1@mail.com

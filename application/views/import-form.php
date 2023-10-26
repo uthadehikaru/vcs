@@ -9,9 +9,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<div class="mb-3">
 			<label for="table" class="form-label">Data</label>
 			<select name="table" class="form-control">
-				<option value="partners">1. Partner</option>
+				<option value="customers">1. Customer</option>
+				<option value="billings">2. Billing</option>
+				<option value="partners">3. Partner</option>
 				<option value="vouchers">2. Voucher</option>
-				<option value="customers">3. Customer</option>
 			</select>
 		</div>
 		<div class="mb-3">
