@@ -23,6 +23,12 @@ class Voucher_model extends CI_Model {
             return $query->row();
     }
 
+    public function getByCode($code)
+    {
+            $query = $this->db->get_where('vouchers',['code'=>$code]);
+            return $query->row();
+    }
+
     public function update_or_create($data)
     {
         $id = $this->input->post('id');
@@ -44,6 +50,21 @@ class Voucher_model extends CI_Model {
                 $this->db->insert('vouchers', $data);
                 logs($this->session->userdata('username').' inserted 1 voucher', $data);
                 $this->session->set_flashdata('message','voucher Created');
+        }
+
+    }
+
+    
+
+    public function import($data)
+    {
+        $voucher = $this->getByCode($data['code']);
+
+        if($voucher){
+                $this->db->where('id', $voucher->id);
+                $this->db->update('vouchers', $data);
+        }else{
+                $this->db->insert('vouchers', $data);
         }
 
     }

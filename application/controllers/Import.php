@@ -17,6 +17,8 @@ class Import extends CI_Controller {
 		if(!$this->session->has_userdata('username'))
 			redirect('login');
 
+		$this->load->model('Voucher_model');
+
 		$statuses = ['available','sent','active','suspend','redeem','terminate','inactive'];
 		try{
 			$file = $_FILES['file']['tmp_name'];
@@ -59,12 +61,16 @@ class Import extends CI_Controller {
 								exit;
 							}
 
-							$vouchers[] = [
+							$voucher = [
 								'code' => $row[0],
 								'partner_id' => $partner->id,
 								'status' => $row[3],
 								'billing_id' => $row[4]
 							];
+
+							$vouchers[] = $voucher;
+
+							$this->Voucher_model->import($voucher);
 						}
 
 						if($table=='customers'){
@@ -107,7 +113,6 @@ class Import extends CI_Controller {
 							$this->db->update('vouchers', ['status'=>$status]);
 						}
 					} else if($vouchers){
-						$this->db->insert_batch('vouchers',$vouchers);
 						$count = count($vouchers);
 					} else if($partners){
 						$this->db->insert_batch('partners',$partners);
