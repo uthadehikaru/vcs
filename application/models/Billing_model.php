@@ -77,5 +77,18 @@ class Billing_model extends CI_Model {
         ->from('billings');
         return $this->db->get()->result_array();
     }
+    
+    public function import($data)
+    {
+        $billing = $this->get($data['id']);
+
+        if($billing){
+                $this->db->where('id', $billing->id);
+                $this->db->update('billings', $data);
+        }else{
+                $this->db->insert('billings', $data);
+        }
+
+    }
 
 }

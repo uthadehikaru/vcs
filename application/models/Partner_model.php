@@ -19,6 +19,12 @@ class Partner_model extends CI_Model {
             return $query->row();
     }
 
+    public function getByProduct($product)
+    {
+            $query = $this->db->get_where('partners',['product'=>$product]);
+            return $query->row();
+    }
+
     public function update_or_create($data)
     {
         $id = $this->input->post('id');
@@ -72,6 +78,19 @@ class Partner_model extends CI_Model {
         $this->db->select('partners.id, partners.name, partners.phone, partners.email');
 		$this->db->from('partners');
         return $this->db->get()->result_array();
+    }
+    
+    public function import($data)
+    {
+        $partner = $this->getByProduct($data['product']);
+
+        if($partner){
+                $this->db->where('id', $partner->id);
+                $this->db->update('partners', $data);
+        }else{
+                $this->db->insert('partners', $data);
+        }
+
     }
 
 }

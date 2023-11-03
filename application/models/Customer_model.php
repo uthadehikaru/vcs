@@ -74,4 +74,17 @@ class Customer_model extends CI_Model {
         return $this->db->get()->result_array();
     }
 
+    public function import($data)
+    {
+        $customer = $this->get($data['id']);
+
+        if($customer){
+                $this->db->where('id', $customer->id);
+                $this->db->update('customers', $data);
+        }else{
+                $this->db->insert('customers', $data);
+        }
+
+    }
+
 }

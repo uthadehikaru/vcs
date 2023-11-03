@@ -17,7 +17,10 @@ class Import extends CI_Controller {
 		if(!$this->session->has_userdata('username'))
 			redirect('login');
 
+		$this->load->model('Billing_model');
 		$this->load->model('Voucher_model');
+		$this->load->model('Customer_model');
+		$this->load->model('Partner_model');
 
 		$statuses = ['available','sent','active','suspend','redeem','terminate','inactive'];
 		try{
@@ -53,7 +56,6 @@ class Import extends CI_Controller {
 								exit;
 							}
 							
-							$this->load->model('Billing_model');
 							$billing = $this->Billing_model->get($row[4]);
 							if($row[4] && !$billing){
 								$this->session->set_flashdata('error','No Billing Account Found '.$row[4]);
@@ -82,43 +84,44 @@ class Import extends CI_Controller {
 							];
 
 							$customers[] = $customer;
+
+							$this->Customer_model->import($customer);
 						}
 
 						if($table=='billings'){
-							$billings[] = [
+							$billing = [
 								'customer_id' => $row[0],
 								'id' => $row[1],
 								'package' => $row[2]
 							];
+
+							$billings[] = $billing;
+
+							$this->Billing_model->import($billing);
 						}
 
 						if($table=='partners'){
 
-							$partners[] = [
+							$partner = [
 								'name' => $row[0],
 								'product' => $row[1],
 							];
+
+							$partners[] = $partner;
+
+							$this->Partner_model->import($partner);
 						}
 
 						// Simpan data ke database.
 					}
 					$count = 0;
 					if($customers){
-						$this->db->insert_batch('customers',$customers);
 						$count = count($customers);
-
-						foreach($vouchers as $id=>$status){
-							$this->db->reset_query();
-							$this->db->where('id', $id);
-							$this->db->update('vouchers', ['status'=>$status]);
-						}
 					} else if($vouchers){
 						$count = count($vouchers);
 					} else if($partners){
-						$this->db->insert_batch('partners',$partners);
 						$count = count($partners);
 					} else if($billings){
-						$this->db->insert_batch('billings',$billings);
 						$count = count($billings);
 					}
 
